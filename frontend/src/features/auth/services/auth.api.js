@@ -5,6 +5,14 @@ const api = axios.create({
   withCredentials: true,
 });
 
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 export const register = async ({ username, email, password }) => {
   try {
     const response = await api.post("/api/auth/register", {
@@ -12,6 +20,10 @@ export const register = async ({ username, email, password }) => {
       email,
       password,
     });
+
+    if (response.data?.token) {
+      localStorage.setItem("token", response.data.token);
+    }
 
     return response.data;
   } catch (error) {
@@ -24,6 +36,10 @@ export const login = async ({ email, password }) => {
   try {
     const response = await api.post("/api/auth/login", { email, password });
 
+    if (response.data?.token) {
+      localStorage.setItem("token", response.data.token);
+    }
+
     return response.data;
   } catch (error) {
     console.error("Error logging in user:", error);
@@ -34,9 +50,10 @@ export const login = async ({ email, password }) => {
 export const logout = async () => {
   try {
     const response = await api.get("/api/auth/logout");
-
+    localStorage.removeItem("token");
     return response.data;
   } catch (error) {
+    localStorage.removeItem("token");
     console.error("Error logging out user:", error);
     throw error;
   }

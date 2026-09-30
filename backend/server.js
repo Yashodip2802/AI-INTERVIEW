@@ -13,12 +13,6 @@ import {
 
 connectDB();
 
-app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-  }),
-);
 
 const PORT = process.env.PORT || 5000;
 

@@ -37,10 +37,19 @@ const registerUserController = async (req, res) => {
         {expiresIn: "1d"}
     )
 
-    res.cookie("token", token)
+    const isProduction = process.env.NODE_ENV === "production";
+    const cookieOptions = {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? "none" : "lax",
+        maxAge: 24 * 60 * 60 * 1000
+    };
+
+    res.cookie("token", token, cookieOptions);
 
     res.status(201).json({
         message: "User registered successfully",
+        token,
         user: {
             id: user._id,
             username: user.username,
@@ -81,10 +90,19 @@ const loginUserController = async (req, res) => {
         {expiresIn: "1d"}
     )
 
-    res.cookie("token", token)
+    const isProduction = process.env.NODE_ENV === "production";
+    const cookieOptions = {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? "none" : "lax",
+        maxAge: 24 * 60 * 60 * 1000
+    };
+
+    res.cookie("token", token, cookieOptions);
 
     res.status(200).json({
         message: "User logged in successfully",
+        token,
         user: {
             id: user._id,
             username: user.username,
@@ -100,13 +118,18 @@ const loginUserController = async (req, res) => {
  * @access Public
  */
 const logoutUserController = async (req, res) => {
-    const token = req.cookies.token;
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
 
     if(token) {
         await blacklistModel.create({ token });
     }
 
-    res.clearCookie("token");
+    const isProduction = process.env.NODE_ENV === "production";
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? "none" : "lax"
+    });
     res.status(200).json({ message: "User logged out successfully" });
 }
 

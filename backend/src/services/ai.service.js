@@ -262,11 +262,20 @@ Job Description: ${jobDescription}
 const generatePdfFromHtml = async (htmlContent) => {
   const launchOptions = {
     headless: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    ...(process.env.PUPPETEER_EXECUTABLE_PATH
-      ? { executablePath: process.env.PUPPETEER_EXECUTABLE_PATH }
-      : { channel: "chrome" }),
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+      "--disable-gpu",
+    ],
   };
+
+  if (process.env.PUPPETEER_EXECUTABLE_PATH) {
+    launchOptions.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH;
+  } else if (process.platform === "win32") {
+    launchOptions.channel = "chrome";
+  }
+
   const browser = await puppeteer.launch(launchOptions);
   const page = await browser.newPage();
   await page.setContent(htmlContent, { waitUntil: "networkidle0" });
