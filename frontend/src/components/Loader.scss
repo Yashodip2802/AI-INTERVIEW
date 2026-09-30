@@ -1,0 +1,43 @@
+// ── Variables ────────────────────────────────────────────────────────────────
+$bg-page:        #0d1117;
+$text-primary:   #e6edf3;
+$accent:         #ff2d78;
+
+// ── Loader Styles ─────────────────────────────────────────────────────────────
+.loader-screen {
+    min-height: 100vh;
+    width: 100%;
+    background-color: $bg-page;
+    color: $text-primary;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.loader-spinner {
+    width: 3rem;
+    height: 3rem;
+    border: 0.25rem solid rgba(255, 255, 255, 0.1);
+    border-top: 0.25rem solid $accent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader-message {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: $text-primary;
+    margin: 0;
+}

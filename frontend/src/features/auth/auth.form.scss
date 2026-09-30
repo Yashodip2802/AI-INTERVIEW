@@ -1,0 +1,91 @@
+main {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at 50% 20%, rgba(99, 102, 241, 0.1) 0%, rgba(9, 13, 22, 1) 70%);
+    padding: 1.5rem;
+
+    .form-container {
+        width: 100%;
+        max-width: 420px;
+        background: #111726;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.1);
+        border-radius: 1.25rem;
+        padding: 2.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #f8fafc;
+            letter-spacing: -0.02em;
+        }
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .error {
+        color: #f87171;
+        font-size: 0.825rem;
+        margin-top: 0.25rem;
+    }
+
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #94a3b8;
+        }
+
+        input {
+            background-color: #161e31;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #f8fafc;
+            font-size: 0.95rem;
+            outline: none;
+            padding: 0.75rem 1rem;
+            border-radius: 0.65rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+
+            &::placeholder {
+                color: #475569;
+            }
+
+            &:focus {
+                border-color: #6366f1;
+                box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            }
+        }
+    }
+
+    p {
+        font-size: 0.875rem;
+        color: #94a3b8;
+        text-align: center;
+    }
+
+    a {
+        color: #818cf8;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s;
+
+        &:hover {
+            color: #a5b4fc;
+            text-decoration: underline;
+        }
+    }
+}
